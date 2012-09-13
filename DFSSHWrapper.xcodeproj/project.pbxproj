@@ -9,10 +9,17 @@
 /* Begin PBXBuildFile section */
 		372C285516025399005DD8D0 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 372C285416025399005DD8D0 /* Cocoa.framework */; };
 		372C285F1602539A005DD8D0 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 372C285D1602539A005DD8D0 /* InfoPlist.strings */; };
-		372C28611602539A005DD8D0 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 372C28601602539A005DD8D0 /* main.m */; };
+		372C28611602539A005DD8D0 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 372C28601602539A005DD8D0 /* main.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		372C28651602539A005DD8D0 /* Credits.rtf in Resources */ = {isa = PBXBuildFile; fileRef = 372C28631602539A005DD8D0 /* Credits.rtf */; };
-		372C28681602539A005DD8D0 /* DFAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 372C28671602539A005DD8D0 /* DFAppDelegate.m */; };
+		372C28681602539A005DD8D0 /* DFAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 372C28671602539A005DD8D0 /* DFAppDelegate.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		372C286B1602539A005DD8D0 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 372C28691602539A005DD8D0 /* MainMenu.xib */; };
+		372C288C160254C2005DD8D0 /* libssh2.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 372C287E160254C2005DD8D0 /* libssh2.a */; };
+		372C289216025760005DD8D0 /* DFSSHConnectionType.m in Sources */ = {isa = PBXBuildFile; fileRef = 372C2872160253B3005DD8D0 /* DFSSHConnectionType.m */; };
+		372C289316025760005DD8D0 /* DFSSHConnector.m in Sources */ = {isa = PBXBuildFile; fileRef = 372C2874160253B3005DD8D0 /* DFSSHConnector.m */; };
+		372C289416025760005DD8D0 /* DFSSHOperator.m in Sources */ = {isa = PBXBuildFile; fileRef = 372C2876160253B3005DD8D0 /* DFSSHOperator.m */; };
+		372C289516025760005DD8D0 /* DFSSHServer.m in Sources */ = {isa = PBXBuildFile; fileRef = 372C2878160253B3005DD8D0 /* DFSSHServer.m */; };
+		372C289F160258AE005DD8D0 /* libcrypto.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 372C289E160258AE005DD8D0 /* libcrypto.dylib */; };
+		372C28A1160258B6005DD8D0 /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 372C28A0160258B6005DD8D0 /* libz.dylib */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -29,6 +36,36 @@
 		372C28661602539A005DD8D0 /* DFAppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DFAppDelegate.h; sourceTree = "<group>"; };
 		372C28671602539A005DD8D0 /* DFAppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DFAppDelegate.m; sourceTree = "<group>"; };
 		372C286A1602539A005DD8D0 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/MainMenu.xib; sourceTree = "<group>"; };
+		372C2871160253B3005DD8D0 /* DFSSHConnectionType.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DFSSHConnectionType.h; sourceTree = "<group>"; };
+		372C2872160253B3005DD8D0 /* DFSSHConnectionType.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DFSSHConnectionType.m; sourceTree = "<group>"; };
+		372C2873160253B3005DD8D0 /* DFSSHConnector.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DFSSHConnector.h; sourceTree = "<group>"; };
+		372C2874160253B3005DD8D0 /* DFSSHConnector.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DFSSHConnector.m; sourceTree = "<group>"; };
+		372C2876160253B3005DD8D0 /* DFSSHOperator.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DFSSHOperator.m; sourceTree = "<group>"; };
+		372C2877160253B3005DD8D0 /* DFSSHServer.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DFSSHServer.h; sourceTree = "<group>"; };
+		372C2878160253B3005DD8D0 /* DFSSHServer.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DFSSHServer.m; sourceTree = "<group>"; };
+		372C287A160254C2005DD8D0 /* channel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = channel.h; sourceTree = "<group>"; };
+		372C287B160254C2005DD8D0 /* comp.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = comp.h; sourceTree = "<group>"; };
+		372C287C160254C2005DD8D0 /* crypto.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = crypto.h; sourceTree = "<group>"; };
+		372C287D160254C2005DD8D0 /* libgcrypt.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = libgcrypt.h; sourceTree = "<group>"; };
+		372C287E160254C2005DD8D0 /* libssh2.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libssh2.a; sourceTree = "<group>"; };
+		372C287F160254C2005DD8D0 /* libssh2.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = libssh2.h; sourceTree = "<group>"; };
+		372C2880160254C2005DD8D0 /* libssh2_config.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = libssh2_config.h; sourceTree = "<group>"; };
+		372C2881160254C2005DD8D0 /* libssh2_priv.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = libssh2_priv.h; sourceTree = "<group>"; };
+		372C2882160254C2005DD8D0 /* libssh2_publickey.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = libssh2_publickey.h; sourceTree = "<group>"; };
+		372C2883160254C2005DD8D0 /* libssh2_sftp.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = libssh2_sftp.h; sourceTree = "<group>"; };
+		372C2884160254C2005DD8D0 /* mac.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = mac.h; sourceTree = "<group>"; };
+		372C2885160254C2005DD8D0 /* misc.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = misc.h; sourceTree = "<group>"; };
+		372C2886160254C2005DD8D0 /* openssl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = openssl.h; sourceTree = "<group>"; };
+		372C2887160254C2005DD8D0 /* packet.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = packet.h; sourceTree = "<group>"; };
+		372C2888160254C2005DD8D0 /* session.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = session.h; sourceTree = "<group>"; };
+		372C2889160254C2005DD8D0 /* sftp.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = sftp.h; sourceTree = "<group>"; };
+		372C288A160254C2005DD8D0 /* transport.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = transport.h; sourceTree = "<group>"; };
+		372C288B160254C2005DD8D0 /* userauth.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = userauth.h; sourceTree = "<group>"; };
+		372C28911602563C005DD8D0 /* DFSSHOperator.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DFSSHOperator.h; sourceTree = "<group>"; };
+		372C28961602586D005DD8D0 /* libssl.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libssl.dylib; path = usr/lib/libssl.dylib; sourceTree = SDKROOT; };
+		372C289816025889005DD8D0 /* libssl.0.9.8.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libssl.0.9.8.dylib; path = usr/lib/libssl.0.9.8.dylib; sourceTree = SDKROOT; };
+		372C289E160258AE005DD8D0 /* libcrypto.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libcrypto.dylib; path = usr/lib/libcrypto.dylib; sourceTree = SDKROOT; };
+		372C28A0160258B6005DD8D0 /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = usr/lib/libz.dylib; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -36,7 +73,10 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				372C28A1160258B6005DD8D0 /* libz.dylib in Frameworks */,
+				372C289F160258AE005DD8D0 /* libcrypto.dylib in Frameworks */,
 				372C285516025399005DD8D0 /* Cocoa.framework in Frameworks */,
+				372C288C160254C2005DD8D0 /* libssh2.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -46,6 +86,10 @@
 		372C284516025399005DD8D0 = {
 			isa = PBXGroup;
 			children = (
+				372C28A0160258B6005DD8D0 /* libz.dylib */,
+				372C289E160258AE005DD8D0 /* libcrypto.dylib */,
+				372C289816025889005DD8D0 /* libssl.0.9.8.dylib */,
+				372C28961602586D005DD8D0 /* libssl.dylib */,
 				372C285A16025399005DD8D0 /* DFSSHWrapper */,
 				372C285316025399005DD8D0 /* Frameworks */,
 				372C285116025399005DD8D0 /* Products */,
@@ -82,6 +126,15 @@
 		372C285A16025399005DD8D0 /* DFSSHWrapper */ = {
 			isa = PBXGroup;
 			children = (
+				372C2879160254C2005DD8D0 /* Headers */,
+				372C2871160253B3005DD8D0 /* DFSSHConnectionType.h */,
+				372C2872160253B3005DD8D0 /* DFSSHConnectionType.m */,
+				372C2873160253B3005DD8D0 /* DFSSHConnector.h */,
+				372C2874160253B3005DD8D0 /* DFSSHConnector.m */,
+				372C28911602563C005DD8D0 /* DFSSHOperator.h */,
+				372C2876160253B3005DD8D0 /* DFSSHOperator.m */,
+				372C2877160253B3005DD8D0 /* DFSSHServer.h */,
+				372C2878160253B3005DD8D0 /* DFSSHServer.m */,
 				372C28661602539A005DD8D0 /* DFAppDelegate.h */,
 				372C28671602539A005DD8D0 /* DFAppDelegate.m */,
 				372C28691602539A005DD8D0 /* MainMenu.xib */,
@@ -100,6 +153,31 @@
 				372C28631602539A005DD8D0 /* Credits.rtf */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		372C2879160254C2005DD8D0 /* Headers */ = {
+			isa = PBXGroup;
+			children = (
+				372C287A160254C2005DD8D0 /* channel.h */,
+				372C287B160254C2005DD8D0 /* comp.h */,
+				372C287C160254C2005DD8D0 /* crypto.h */,
+				372C287D160254C2005DD8D0 /* libgcrypt.h */,
+				372C287E160254C2005DD8D0 /* libssh2.a */,
+				372C287F160254C2005DD8D0 /* libssh2.h */,
+				372C2880160254C2005DD8D0 /* libssh2_config.h */,
+				372C2881160254C2005DD8D0 /* libssh2_priv.h */,
+				372C2882160254C2005DD8D0 /* libssh2_publickey.h */,
+				372C2883160254C2005DD8D0 /* libssh2_sftp.h */,
+				372C2884160254C2005DD8D0 /* mac.h */,
+				372C2885160254C2005DD8D0 /* misc.h */,
+				372C2886160254C2005DD8D0 /* openssl.h */,
+				372C2887160254C2005DD8D0 /* packet.h */,
+				372C2888160254C2005DD8D0 /* session.h */,
+				372C2889160254C2005DD8D0 /* sftp.h */,
+				372C288A160254C2005DD8D0 /* transport.h */,
+				372C288B160254C2005DD8D0 /* userauth.h */,
+			);
+			path = Headers;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -167,6 +245,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				372C289216025760005DD8D0 /* DFSSHConnectionType.m in Sources */,
+				372C289316025760005DD8D0 /* DFSSHConnector.m in Sources */,
+				372C289416025760005DD8D0 /* DFSSHOperator.m in Sources */,
+				372C289516025760005DD8D0 /* DFSSHServer.m in Sources */,
 				372C28611602539A005DD8D0 /* main.m in Sources */,
 				372C28681602539A005DD8D0 /* DFAppDelegate.m in Sources */,
 			);
@@ -254,10 +336,16 @@
 		372C286F1602539A005DD8D0 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
+				CLANG_ENABLE_OBJC_ARC = YES;
 				COMBINE_HIDPI_IMAGES = YES;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "DFSSHWrapper/DFSSHWrapper-Prefix.pch";
 				INFOPLIST_FILE = "DFSSHWrapper/DFSSHWrapper-Info.plist";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)/DFSSHWrapper/Headers\"",
+				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = app;
 			};
@@ -266,10 +354,16 @@
 		372C28701602539A005DD8D0 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
+				CLANG_ENABLE_OBJC_ARC = YES;
 				COMBINE_HIDPI_IMAGES = YES;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "DFSSHWrapper/DFSSHWrapper-Prefix.pch";
 				INFOPLIST_FILE = "DFSSHWrapper/DFSSHWrapper-Info.plist";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)/DFSSHWrapper/Headers\"",
+				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = app;
 			};
