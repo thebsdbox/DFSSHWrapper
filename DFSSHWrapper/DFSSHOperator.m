@@ -37,9 +37,10 @@ static int waitsocket(int socket_fd, LIBSSH2_SESSION *session)
     
     int rc;
     int dir;
-	
-    timeout.tv_sec = 2;
-    timeout.tv_usec = 0;
+	// Wait time in Seconds
+    timeout.tv_sec = 0;
+    // Wait time in Microseconds... (really need that level of granularity :/ )
+    timeout.tv_usec = 500000;
     
     FD_ZERO(&fd);
     FD_SET(socket_fd, &fd);
@@ -56,9 +57,19 @@ static int waitsocket(int socket_fd, LIBSSH2_SESSION *session)
     return rc;
 }
 
-// from libssh2 example - ssh2_exec.c
+// Timer driven exec
 +(NSString*) execCommand:(NSString *)commandline server:(DFSSHServer*)server {
+    
+    return [self execCommand:commandline server:server timeout:[NSNumber numberWithDouble:0]];
+}
+
+
+
+// from libssh2 example - ssh2_exec.c
++(NSString*) execCommand:(NSString *)commandline server:(DFSSHServer*)server timeout:(NSNumber *)timeout {
     int bytecount = 0; /*wrap up in a function*/
+    CFAbsoluteTime time;
+    time = CFAbsoluteTimeGetCurrent() + [timeout doubleValue];
     if (![server connectionStatus]) 
         return @"No Connection";    
 
@@ -66,7 +77,7 @@ static int waitsocket(int socket_fd, LIBSSH2_SESSION *session)
     char buffer[0x4000];
     
     //Clear buffer
-    memset(buffer, nil, sizeof(buffer));
+    memset(buffer, nil, 0x4000);
     /* Exec non-blocking on the remote host */
     while( (channel = libssh2_channel_open_session([server session])) == NULL &&
 		  libssh2_session_last_error([server session],NULL,NULL,0) ==
@@ -92,8 +103,11 @@ static int waitsocket(int socket_fd, LIBSSH2_SESSION *session)
     {
         /* loop until we block */
         int rc1;
+        if (time < CFAbsoluteTimeGetCurrent())
+            break;
         do
         {
+
             rc1 = libssh2_channel_read( channel, buffer, (sizeof(buffer)));
             if( rc1 > 0 )
                 bytecount += rc1;

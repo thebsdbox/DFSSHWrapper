@@ -13,4 +13,6 @@
 
 +(NSString*) execCommand:(NSString *)commandline server:(DFSSHServer*)server;
 
++(NSString*) execCommand:(NSString *)commandline server:(DFSSHServer*)server timeout:(NSNumber *)timeout;
+
 @end

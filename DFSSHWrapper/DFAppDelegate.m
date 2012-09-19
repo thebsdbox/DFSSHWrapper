@@ -18,8 +18,8 @@
 {
     // Insert code here to initialize your application
     DFSSHServer *server = [[DFSSHServer alloc]init];
-    [server setSSHHost:@"<HOSTNAME>" port:22 user:@"dan" key:@"" keypub:@"" password:@"<PASSWORD>"];
-    
+    [server setSSHHost:@"<>" port:22 user:@"dan" key:@"" keypub:@"" password:@"<PASSWORD>"];
+
     DFSSHConnector *connection = [[DFSSHConnector alloc] init];
     DFSSHConnectionType *connectionType = [[DFSSHConnectionType alloc] init];
     connectionType.password=false;
@@ -32,11 +32,12 @@
         NSLog(@"Server Connected");
         
        // NSLog(@”Server 1 connected”);
+        NSLog(@"%@",[DFSSHOperator execCommand:@"find /" server:server timeout:[NSNumber numberWithDouble:10]]);
+        
+        NSLog(@"%@",[DFSSHOperator execCommand:@"uname -a" server:server]);
         
     }
-    NSLog(@"%@",[DFSSHOperator execCommand:@"uname -a" server:server]);
-    
-    //NSLog(@”%@”,[sshOperator execCommand:@"uname -a" DFSSServer:server]);
+   
     
     [connection closeSSH:server];
     
