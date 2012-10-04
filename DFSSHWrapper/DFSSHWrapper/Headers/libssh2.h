@@ -494,11 +494,16 @@ LIBSSH2_API char *libssh2_userauth_list(LIBSSH2_SESSION *session,
                                         unsigned int username_len);
 LIBSSH2_API int libssh2_userauth_authenticated(LIBSSH2_SESSION *session);
 
+    
+    /* Turned ints to long (obj-c returns a long for strlen()) 
+     --Dan
+     */
+    
 LIBSSH2_API int libssh2_userauth_password_ex(LIBSSH2_SESSION *session,
                                              const char *username,
-                                             unsigned int username_len,
+                                             unsigned long username_len,
                                              const char *password,
-                                             unsigned int password_len,
+                                             unsigned long password_len,
                                              LIBSSH2_PASSWD_CHANGEREQ_FUNC((*passwd_change_cb)));
 
 #define libssh2_userauth_password(session, username, password) \
@@ -508,7 +513,7 @@ LIBSSH2_API int libssh2_userauth_password_ex(LIBSSH2_SESSION *session,
 LIBSSH2_API int
 libssh2_userauth_publickey_fromfile_ex(LIBSSH2_SESSION *session,
                                        const char *username,
-                                       unsigned int username_len,
+                                       unsigned long username_len,
                                        const char *publickey,
                                        const char *privatekey,
                                        const char *passphrase);
@@ -556,7 +561,7 @@ libssh2_userauth_hostbased_fromfile_ex(LIBSSH2_SESSION *session,
 LIBSSH2_API int
 libssh2_userauth_keyboard_interactive_ex(LIBSSH2_SESSION* session,
                                          const char *username,
-                                         unsigned int username_len,
+                                         unsigned long username_len,
                                          LIBSSH2_USERAUTH_KBDINT_RESPONSE_FUNC((*response_callback)));
 
 #define libssh2_userauth_keyboard_interactive(session, username, \
@@ -649,9 +654,9 @@ LIBSSH2_API int libssh2_channel_x11_req_ex(LIBSSH2_CHANNEL *channel,
 
 LIBSSH2_API int libssh2_channel_process_startup(LIBSSH2_CHANNEL *channel,
                                                 const char *request,
-                                                unsigned int request_len,
+                                                unsigned long request_len,
                                                 const char *message,
-                                                unsigned int message_len);
+                                                unsigned long message_len);
 #define libssh2_channel_shell(channel) \
   libssh2_channel_process_startup((channel), "shell", sizeof("shell") - 1, \
                                   NULL, 0)

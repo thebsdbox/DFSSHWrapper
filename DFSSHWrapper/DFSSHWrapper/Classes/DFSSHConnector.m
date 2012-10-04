@@ -1,5 +1,4 @@
-//
-//  sshConnector.m
+////  sshConnector.m
 //  sshtest
 //
 //  Created by Daniel Finneran on 23/10/2011.
@@ -42,7 +41,7 @@ unsigned int hostaddr;
 struct sockaddr_in soin;
 const char *fingerprint;
 
-unsigned int rc;
+unsigned long rc;
 int type;
 int kb_count =0;
 const char *kb_pass;
@@ -111,7 +110,7 @@ static int waitsocket(int socket_fd, LIBSSH2_SESSION *session) {
         /* enable blocking from the ssh2 session */
         libssh2_session_set_blocking([server session], 1);
    
-        NSArray *authtypes = [[NSString stringWithCString:(libssh2_userauth_list([server session], [[server username] UTF8String], strlen([[server username] UTF8String]))) encoding:4] componentsSeparatedByString:@","];        
+        NSArray *authtypes = [[NSString stringWithCString:(libssh2_userauth_list([server session], [[server username] UTF8String], (int)strlen([[server username] UTF8String]))) encoding:4] componentsSeparatedByString:@","];
         
             /* disable blocking again */
             
@@ -188,7 +187,7 @@ static int waitsocket(int socket_fd, LIBSSH2_SESSION *session) {
         while ((rc = libssh2_session_startup([server session], [server sock])) == LIBSSH2_ERROR_EAGAIN);
         //while ((rc = libssh2_session_handshake([server session], [server sock])) == LIBSSH2_ERROR_EAGAIN);
         if (rc) {
-            NSLog(@"Failure establishing SSH session: %u", rc);
+            NSLog(@"Failure establishing SSH session: %lu", rc);
             server.session=nil;
             return -1;
         }
@@ -239,19 +238,16 @@ static int waitsocket(int socket_fd, LIBSSH2_SESSION *session) {
         return -1;
     
     libssh2_knownhost_free(nh);
-
-
     //warning about #define doing a strlen :/
     while ((rc = libssh2_userauth_publickey_fromfile([server session], 
-                                                     [[server username]UTF8String], 
-                                                     [[server keypub]UTF8String], 
-                                                     [[server key]UTF8String], 
-                                                     [[server password]UTF8String])) == LIBSSH2_ERROR_EAGAIN);
+                                                     [[server username] UTF8String], 
+                                                     [[server keypub] UTF8String], 
+                                                     [[server key] UTF8String], 
+                                                     [[server password] UTF8String])) == LIBSSH2_ERROR_EAGAIN);
     if (rc) {
         NSLog(@"Authentication by public key failed");
         return 1;
     }
-    NSLog(@"Connection Succesful");
     [server setConnected:TRUE];   
     return 0;
 }
@@ -259,29 +255,23 @@ static int waitsocket(int socket_fd, LIBSSH2_SESSION *session) {
 -(int) connectPassword:(DFSSHServer*)server {
     if (![server session])
         return -1;
-    
-   // libssh2_knownhost_free(nh);
-
     if ( strlen([[server password]UTF8String]) != 0 ) {
-            /* We could authenticate via password */
-            NSLog(@"%s",[[server password ]UTF8String]);
-            //warning about #define doing a strlen :/
+            /* We could authenticate */
             while ((rc = libssh2_userauth_password([server session], [[server username]UTF8String], [[server password]UTF8String]) ) == LIBSSH2_ERROR_EAGAIN);
             if (rc) {
                 NSLog(@"Authentication by password failed for user %s", [[server username]UTF8String]);
                 return 1;
         }
     }
-    NSLog(@"Connection Succesful");
     [server setConnected:TRUE];   
     return 0;
 }
 
-char *passwordFunc(const char *s)
-{
+char *passwordFunc() {
     static char *pw = NULL;
-    if (strlen(s)) {
-        pw = s;
+    if (strlen(kb_pass)) {
+        //DON'T Change *s, casting to stop warning.
+        pw = (char*) kb_pass;
     } 
     return pw;
 }
@@ -304,8 +294,8 @@ void kb_int(const char *name, int name_len, const char *instr, int instr_len,
         printf("'\n");
         NSLog(@"Entering response");
         
-        res[i].text = strdup(passwordFunc(""));
-        res[i].length = strlen(passwordFunc(""));
+        res[i].text = strdup(kb_pass);
+        res[i].length = (int)strlen(kb_pass);
         
         printf("Response %d from user is '", i);
         fwrite(res[i].text, 1, res[i].length, stdout);
@@ -321,18 +311,9 @@ void kb_int(const char *name, int name_len, const char *instr, int instr_len,
 -(int) connectKeyboard_Interactive:(DFSSHServer*)server {
     if (![server session])
         return -1;
-    
-    (void) passwordFunc([[server password]UTF8String]);
-    //libssh2_knownhost_free(nh);
-    kb_pass = [[server password]UTF8String];
-  
-    
-    if ( strlen([[server password]UTF8String]) != 0 ) {
-        /* We could authenticate via password */
-        NSLog(@"%s",[[server password]UTF8String]);
-    }
 
-    
+    kb_pass = [[server password]UTF8String];
+    passwordFunc();    
     libssh2_session_set_blocking([server session], 1);
     int rc = (libssh2_userauth_keyboard_interactive([server session], [[server username]UTF8String], &kb_int));
     
@@ -343,13 +324,10 @@ void kb_int(const char *name, int name_len, const char *instr, int instr_len,
     } else if (rc < 0) {
         printf("\tAuthentication by keyboard-interactive failed!\n");
         return 1;
-    } else {
-        printf("\tAuthentication by keyboard-interactive succeeded.\n");
     }
-    
     libssh2_session_set_blocking([server session], 0);
     if (rc == LIBSSH2_ERROR_EAGAIN) {
-        NSLog(@"boned");
+        printf("\tAuthentication by keyboard-interactive failed!\n");
     }
     [server setConnected:TRUE];   
     return 0;

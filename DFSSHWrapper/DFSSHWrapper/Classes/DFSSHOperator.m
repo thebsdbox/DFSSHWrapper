@@ -10,7 +10,7 @@
 #import "libssh2.h"
 
 LIBSSH2_CHANNEL *channel;
-int rc;
+unsigned long rc;
 
 int exitcode;
 
@@ -60,7 +60,7 @@ static int waitsocket(int socket_fd, LIBSSH2_SESSION *session)
 // Timer driven exec
 +(NSString*) execCommand:(NSString *)commandline server:(DFSSHServer*)server {
     
-    return [self execCommand:commandline server:server timeout:[NSNumber numberWithDouble:0]];
+    return [self execCommand:commandline server:server timeout:[NSNumber numberWithDouble:1]];
 }
 
 
@@ -77,7 +77,7 @@ static int waitsocket(int socket_fd, LIBSSH2_SESSION *session)
     char buffer[0x4000];
     
     //Clear buffer
-    memset(buffer, nil, 0x4000);
+    memset(buffer, 0, 0x4000);
     /* Exec non-blocking on the remote host */
     while( (channel = libssh2_channel_open_session([server session])) == NULL &&
 		  libssh2_session_last_error([server session],NULL,NULL,0) ==
@@ -102,7 +102,7 @@ static int waitsocket(int socket_fd, LIBSSH2_SESSION *session)
     for( ;; )
     {
         /* loop until we block */
-        int rc1;
+        long rc1;
         if (time < CFAbsoluteTimeGetCurrent())
             break;
         do
@@ -111,8 +111,8 @@ static int waitsocket(int socket_fd, LIBSSH2_SESSION *session)
             rc1 = libssh2_channel_read( channel, buffer, (sizeof(buffer)));
             if( rc1 > 0 )
                 bytecount += rc1;
-            else 
-                NSLog(@"libssh2_channel_read returned %d", rc1);
+            //else
+                //NSLog(@"libssh2_channel_read returned %ld", rc1);
         }
         while( rc1 > 0 );
 		
@@ -133,9 +133,9 @@ static int waitsocket(int socket_fd, LIBSSH2_SESSION *session)
     {
         exitcode = libssh2_channel_get_exit_status( channel );
     }
-    NSLog(@"Number of bytes :%d", bytecount);
+    //NSLog(@"Number of bytes :%d", bytecount);
     if (sizeof(buffer) > bytecount)
-        buffer[(bytecount+1)] = NULL;
+        buffer[(bytecount+1)] = 0;
     //NSLog(@"\nEXIT: %d bytecount: %d", exitcode, bytecount);
     libssh2_channel_free(channel);
     channel = NULL;
