@@ -15,21 +15,40 @@ EXAMPLE CODE:
 
 
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification
+
 {
+
 	// Create server instance (this can be passed around as it contains the socket info etc..)
+	
 	DFSSHServer *server = [[DFSSHServer alloc] init];	
+	
 	[server setSSHHost:@"192.168.2.100" port:22 user:@"dan" key:@"" keypub:@"" password:@"XXXXX"];
+	
 	// Create connection instance, this will be changed at a later date to use class methods so wont
+	
 	// need instantiating
+	
 	DFSSHConnector *connection = [[DFSSHConnector alloc] init];
+	
+
 	// Set connection status to Auto Detect (will check for keyboard/password/key)
+	
 	// and connect
+	
 	[connection connect:server connectionType:[DFSSHConnectionType auto]];
+	
 	// if connected try the following commands
+	
 	if ([server connectionStatus]) {
+	
 	         NSLog(@”Server 1 connected”); 
+	         
 	         NSLog(@”%@”,[DFSSHOperator execCommand:@"uname -a" sshServer:server]);
-	}         
+	         
+	}   
+	      
 	// Close connection
+	
 	[connection closeSSH:server];
+	
 }
