@@ -20,6 +20,13 @@ function create_project()
 
 #Only one argument, which is the path to the libssh archive
 
+if [ -z "$1" ];
+then
+	echo "libssh2 creator requires a the path to the archive"
+	echo "e.g. ./make_libssh.sh ./libssh2-1.2.3.targz"
+	exit -1;
+fi
+
 echo "Processing $1"
 if [ -f $1 ];
 then 
@@ -28,6 +35,10 @@ else
 	echo "$1 does not exist, Exiting."
 	exit -1;
 fi
+
+
+
+
 mkdir -p $WORKING_DIR/$ARCHIVE_DIR 
 tar -xvzf $1 -C ./$ARCHIVE_DIR
 pwd

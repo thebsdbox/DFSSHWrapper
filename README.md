@@ -3,7 +3,12 @@ This is a simple wrapper script, that allows simple and easy use of libssh2, fro
 It allows simple interactions with an ssh server, however terminal and sftp aren't implemented.
 To work with libssh2, the src archive needs to be downloaded from http://libssh2.org and placed in 
 the same Directory as the make_libssh.sh file. This script (ensure +x) will unpack the src archive,
-configure and build it. It then extracts the required headers and lib archive and places everything
+configure and build it.
+
+Usage:
+	$ ./make_libssh.sh ./archive.tar.gz
+
+It then extracts the required headers and lib archive and places everything
 in a libssh2_xcode directory, which can then be added to your project (Ensure that libcrypto.dylib 
 and libz.dylib are added to your project as well).
 
