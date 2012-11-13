@@ -473,7 +473,7 @@ void kb_int(const char *name, int name_len, const char *instr, int instr_len,
     libssh2_session_free([server session]);
 	
     close([server sock]);
-    NSLog(@"all done\n");
+    NSLog(@"Disconnecting\n");
 	[server setConnected:FALSE];
 	return TRUE;
 }

@@ -21,5 +21,6 @@
 @property (nonatomic) BOOL keyboard_interactive;
 @property (nonatomic) BOOL autoDetect;
 
++(id)auto;
 
 @end

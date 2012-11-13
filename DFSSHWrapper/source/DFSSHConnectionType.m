@@ -12,4 +12,10 @@
 
 @synthesize password, keyboard_interactive, publicKey, autoDetect;
 
++(id)auto {
+    id autoConnectorClass = [[[self class] alloc] init];
+    [autoConnectorClass setAutoDetect:YES];
+    return autoConnectorClass;
+}
+
 @end

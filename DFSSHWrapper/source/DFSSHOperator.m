@@ -59,7 +59,6 @@ static int waitsocket(int socket_fd, LIBSSH2_SESSION *session)
 
 // Timer driven exec
 +(NSString*) execCommand:(NSString *)commandline server:(DFSSHServer*)server {
-    
     return [self execCommand:commandline server:server timeout:[NSNumber numberWithDouble:1]];
 }
 
@@ -74,21 +73,34 @@ static int waitsocket(int socket_fd, LIBSSH2_SESSION *session)
         return @"No Connection";    
 
     const char * cmd = [commandline UTF8String];
+    
+    if (!cmd)
+        return @"";
+    
     char buffer[0x4000];
     
     //Clear buffer
     memset(buffer, 0, 0x4000);
     /* Exec non-blocking on the remote host */
-    while( (channel = libssh2_channel_open_session([server session])) == NULL &&
-		  libssh2_session_last_error([server session],NULL,NULL,0) ==
-		  LIBSSH2_ERROR_EAGAIN )
+    channel = libssh2_channel_open_session([server session]);
+    int sessionError = libssh2_session_last_error([server session],NULL,NULL,0);
+    while( channel == NULL && sessionError == LIBSSH2_ERROR_EAGAIN )
     {
         waitsocket([server sock], [server session]);
+        // Testing Methods
+        if (time < CFAbsoluteTimeGetCurrent())
+            break;
+        // NSLog(@"%d", sessionError);
+        channel = libssh2_channel_open_session([server session]);
+        sessionError = libssh2_session_last_error([server session],NULL,NULL,0);
+
     }
     if( channel == NULL )
     {
-        NSLog(@"Error\n");
-        exit( 1 );
+        NSLog(@"Error Channel is incorrect");
+        NSLog(@"Returning empty string");
+        return @"";
+        //exit( 1 );
     }
     while( (rc = libssh2_channel_exec(channel, cmd)) == LIBSSH2_ERROR_EAGAIN )
     {
@@ -96,8 +108,9 @@ static int waitsocket(int socket_fd, LIBSSH2_SESSION *session)
     }
     if( rc != 0 )
     {
-        NSLog(@"Error\n");
-        exit( 1 );
+        NSLog(@"Error, return value is wrong  rc = %ld\n", rc);
+        NSLog(@"Returning empty string");
+        return @"";
     }
     for( ;; )
     {
@@ -105,21 +118,18 @@ static int waitsocket(int socket_fd, LIBSSH2_SESSION *session)
         long rc1;
         if (time < CFAbsoluteTimeGetCurrent())
             break;
-        do
-        {
-
+        do {
             rc1 = libssh2_channel_read( channel, buffer, (sizeof(buffer)));
             if( rc1 > 0 )
                 bytecount += rc1;
             //else
                 //NSLog(@"libssh2_channel_read returned %ld", rc1);
-        }
+            }
         while( rc1 > 0 );
 		
         /* this is due to blocking that would occur otherwise so we loop on
 		 this condition */
-        if( rc1 == LIBSSH2_ERROR_EAGAIN )
-        {
+        if( rc1 == LIBSSH2_ERROR_EAGAIN ) {
             waitsocket([server sock], [server session]);
         }
         else
