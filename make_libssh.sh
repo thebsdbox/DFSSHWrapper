@@ -14,7 +14,7 @@ WORKING_DIR=`pwd`
 function create_project()
 {
 	mkdir -p $WORKING_DIR/$PROJECT_DIR
-	mkdir -p $WORKING_DIR/$PROJECT_DIR/headers
+	mkdir -p $WORKING_DIR/$PROJECT_DIR/include
 	mkdir -p $WORKING_DIR/$PROJECT_DIR/lib
 }
 
@@ -53,8 +53,8 @@ make
 
 create_project
 echo "Copying Headers into project directory"
-find $WORKING_DIR/$ARCHIVE_DIR/src -name "*.h" -exec cp {} $WORKING_DIR/$PROJECT_DIR/headers/ \; 
-cp $WORKING_DIR/$ARCHIVE_DIR/include/* $WORKING_DIR/$PROJECT_DIR/headers/
+find $WORKING_DIR/$ARCHIVE_DIR/src -name "*.h" -exec cp {} $WORKING_DIR/$PROJECT_DIR/include/ \; 
+cp $WORKING_DIR/$ARCHIVE_DIR/include/* $WORKING_DIR/$PROJECT_DIR/include/
 echo "Copying Library archive into project directory"
 cp $WORKING_DIR/$ARCHIVE_DIR/src/.libs/libssh2.a $WORKING_DIR/$PROJECT_DIR/lib
 #echo move out once built
